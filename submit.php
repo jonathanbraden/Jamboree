@@ -6,6 +6,7 @@ $datadir = "Data/";
 $name = trim($_POST["name"]); 
 $title = $_POST["title"];
 $abstract = $_POST["abstract"];
+$email = $_POST["email"];
 $slide = $_FILES["slide"]["tmp_name"];
 $slide_type = $_FILES["slide"]["type"];
 $slide_name = chop($_FILES["slide"]["name"]);
@@ -31,6 +32,7 @@ $jsFile = $base.".json";
 $obj->name=$name;
 $obj->title=$title;
 $obj->abstract=$abstract;
+$obj->email=$email;
 $obj->slide=$newslide;
 file_put_contents($jsFile,json_encode($obj));
 
@@ -49,13 +51,17 @@ else {
        echo "<h2>Error uploading file.  Please resubmit.</h2>";
        switch ($_FILES['slide']['error']) { 
          case 1:
-       	   echo "Slide size exceeds 10MB";
+       	   echo "Slide size exceeds PHP server limit of 10MB";
+	   break;
 	 case 2:
 	   echo "Slide size exceeds 10MB";
+	   break;
 	 case 3:    	  
 	   echo "Upload was interupted";
+	   break;
 	 case 4:
 	   echo "No slide was uploaded";   
+	   break;
       }
       return;
 }
@@ -63,6 +69,7 @@ else {
 // Figure out why displayInfo doesn't work to replace this
 echo "<h3>Summary</h3>";
 echo "Name: $name<br>";
+echo "Email: $email<br><br>";
 echo "Title: $title<br>";
 echo "Abstract:<br>";
 echo "$abstract<br>";

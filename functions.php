@@ -18,6 +18,7 @@
     $data = json_decode(file_get_contents($jsFile));
     echo "<h3>Summary</h3>";
     echo "Name: $data->name<br>";
+    echo "Email: $data->email<br><br>";
     echo "Title: $data->title<br>";
     echo "Abstract<br>";
     echo "$data->abstract<br>";

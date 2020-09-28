@@ -15,6 +15,8 @@ Contact either Jonathan (jbraden@cita.utoronto.ca) or Almog (ayalin@cita.utoront
 <form action="./submit.php" method="post" enctype="multipart/form-data">
   <label for="name">Name:</label><br>
   <input type="text" id="name" name="name" size="50"><br>
+  <label for="email">Email (optional):</label><br>
+  <input type="text" id="email" name="email" size="50"><br>
   <label for="title">Title:</label><br>
   <input type="text" id="title" name="title" size="75"><br>
   <label for="abstract">Abstract:</label><br>
