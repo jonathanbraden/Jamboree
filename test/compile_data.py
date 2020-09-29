@@ -76,12 +76,12 @@ def create_program(people):
     #os.system('rm -f program.log program.aux')
     return
 
-def _make_section(prog,sec_people):
+def _make_section(prog,sec_people,title='Astrophysics'):
     """
     Input
       prog - The program tex file we're writing
     """
-    prog.write('\\textbf{\\huge Temporary Heading}')
+    prog.write('\\textbf{\\huge %s}'%title)
     prog.write('\\newline\n')
     prog.write('\\begin{center}\n')
     for p in sec_people:
