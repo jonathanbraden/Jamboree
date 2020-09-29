@@ -67,11 +67,13 @@ def create_program(people):
     # These first two lines are horrendous code style.  Fix them.
     os.system('cat {}program_header.tex > program.tex'.format(template_dir))
     prog = open('program.tex','a')
+    slides = [] # This will store the ordered list of slides
     _make_section(prog,people)
     prog.write('\\end{document}\n')
     prog.close()
 
-#    os.system('pdflatex progam')
+    #os.system('pdflatex progam')
+    #os.system('rm -f program.log program.aux')
     return
 
 def _make_section(prog,sec_people):
@@ -79,12 +81,12 @@ def _make_section(prog,sec_people):
     Input
       prog - The program tex file we're writing
     """
-    #prog.write('\\textbf{\\huge '+sec_info['time']+' --- '+sec_info['title']+'}\n')
+    prog.write('\\textbf{\\huge Temporary Heading}')
     prog.write('\\newline\n')
     prog.write('\\begin{center}\n')
     for p in sec_people:
         _write_program_entry(prog,p)
-    prog.write('\\end{center}\n')
+    prog.write('\\end{center}\n\n')
     return
 
 def _write_program_entry(prog,info):
@@ -105,12 +107,6 @@ def _write_program_entry(prog,info):
     return
 
 def create_slides():
-    return
-
-def make_list_data():
-    """
-    Convert JSON data into a text file suitable for processing by make_program
-    """
     return
 
 if __name__=="__main__":
