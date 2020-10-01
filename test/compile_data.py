@@ -8,11 +8,11 @@ slide_dir = '../Data/'
 data_dir = 'Data/'
 
 sec_data = [
-    { 'title' : 'Introduction', 'time' : '15:00-15:20' , 'people' : [], 'data' : [] },
-    { 'title' : 'Early Universe, Cosmology, and Galaxies', 'time' : '15:20-15:35', 'people' : [u'Alex Lagu\xeb', 'Dongwoo Chung', 'Emily Tyhurst','James Willis','Jennifer Chan','Martine Lokken','Nathan Carlson','Pavel Motloch','Jonathan Braden','Xinyu Li'], 'data' : [] },
-    { 'title' : 'Scintillometry, FRBs, and Pulsars', 'time' : '15:35-15:45', 'people' : ['Dylan Jow', 'Hsiu-Hsien Lin','Jonathan Zhang','Parasar Thulasiram','Ted Mackereth'], 'data' : [] },
-    { 'title' : 'Stars, Compact Objects, and Planets', 'time' : '15:45-16:00', 'people' : ['Almog Yalinewich','Alysa Obertas','Eric Poisson','Janosz Dewberry','Norman Murray','Scott Tremaine','Wei Zhu','Chris Thompson','J. J. Zanazzi'], 'data' : [] },
-    { 'title' : 'Misclassified', 'time' : 'unknown', 'people' : [], 'data' : [] }
+    { 'title' : 'Introduction', 'slide' : 'templates/intro_header_2019.pdf', 'time' : '15:00-15:20' , 'people' : [], 'data' : [] },
+    { 'title' : 'Early Universe , Cosmology, and Galaxies', 'slide' : 'templates/cosmo_header_2019.pdf', 'time' : '15:20-15:35', 'people' : [u'Alex Lagu\xeb', 'Dongwoo Chung', 'Emily Tyhurst','James Willis','Jennifer Chan','Martine Lokken','Nathan Carlson','Pavel Motloch','Jonathan Braden','Xinyu Li'], 'data' : [] },
+    { 'title' : 'Scintillometry, FRBs, and Pulsars', 'slide' : 'templates/radio_header_2019.pdf', 'time' : '15:35-15:45', 'people' : ['Dylan Jow', 'Hsiu-Hsien Lin','Jonathan Zhang','Parasar Thulasiram','Ted Mackereth'], 'data' : [] },
+    { 'title' : 'Stars, Compact Objects, and Planets', 'slide' : 'templates/ga_header_2019.pdf', 'time' : '15:45-16:00', 'people' : ['Almog Yalinewich','Alysa Obertas','Eric Poisson','Janosz Dewberry','Norman Murray','Scott Tremaine','Wei Zhu','Chris Thompson','J. J. Zanazzi'], 'data' : [] },
+    { 'title' : 'Misclassified', 'slide' : 'templates/noslides.pdf', 'time' : 'unknown', 'people' : [], 'data' : [] }
     ]
 
 def read_presenter_data(dir):
@@ -86,7 +86,8 @@ def create_program(people,sections):
     prog = open('program.tex','a')
     slides = [] # This will store the ordered list of slides
     for i,s_ in enumerate(sections):
-        _make_section(prog,s_,slides)
+        new_slides = _make_section(prog,s_)
+        slides = slides + new_slides
     prog.write('\\end{document}\n')
     prog.close()
 
@@ -127,15 +128,28 @@ def _write_program_entry(prog,info):
     prog.write('\\end{tabular}\n')
     return
 
-def create_slide_pdf(files):
+def create_slide_pdf(files,name="cita_jamboree_2020.pdf"):
     """
     Creates a compiled pdf of slides from a list.
     Includes a test to make sure the slide exists.
     """
-    
+    os.system('cp templates/noslides.pdf '+name)
+    for f_ in files:
+        try:
+            with open(f_):
+                fCur = f_.encode("utf8")
+                print(fCur)
+        except IOError:
+            fCur = "templates/noslides.pdf"
+        command = "gs -q -dNOPAUSE -dBATCH -dCompressFonts=true -sDEVICE=pdfwrite -dPDFSETTING=/prepress -sOutputFile=temp.pdf "+name+" "+fCur
+        os.system(command)
+        os.system("mv temp.pdf "+name)
     return
 
+import sys
 if __name__=="__main__":
     people = read_presenter_data(data_dir)
     slides = create_program(people,sec_data)
-    pass
+    if (len(sys.argv) > 1):
+        if sys.argv[1] == ("True" | "true" | "T" | "t"):
+            create_slide_pdf(slides)
