@@ -5,9 +5,9 @@ import os
 
 template_dir = 'templates/'
 slide_dir = '../Data/'
-data_dir = 'Data/'
+data_dir = '../Data/'
 noSlide = 'templates/noslides_2020.pdf'
-headSlide = 'templates/collage_2019.pdf')
+headSlide = 'templates/collage_2019.pdf'
 
 sec_data = [
     { 'title' : 'Introduction', 'slide' : 'templates/intro_header_2020.pdf', 'time' : '15:00-15:20' , 'people' : [], 'data' : [] },
