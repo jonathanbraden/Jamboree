@@ -47,6 +47,9 @@ def group_people(people,sections):
         print('Warning, missing presenters')
         for p in sections[-1]['data']:
             print(p['name'])
+
+    for s_ in sections:
+        s_['data'].sort()
     return
 
 def compute_times(start,talk_len):
@@ -75,7 +78,7 @@ def create_program(people,sections):
 
     Note: Any existing program.tex file is overwritten
     """
-    # Start by grouping people into sections
+    slides = [] # Add the CITA jamboree slide here
     group_people(people,sections)
 
     # These first two lines are horrendous code style.  Fix them.
@@ -83,26 +86,29 @@ def create_program(people,sections):
     prog = open('program.tex','a')
     slides = [] # This will store the ordered list of slides
     for i,s_ in enumerate(sections):
-        _make_section(prog,s_['data'],s_['title'],s_['time'])
+        _make_section(prog,s_,slides)
     prog.write('\\end{document}\n')
     prog.close()
 
     #os.system('pdflatex progam')
     #os.system('rm -f program.log program.aux')
-    return
+    return slides
 
-def _make_section(prog,sec_people,title,time):
+def _make_section(prog,sec):
     """
     Input
       prog - The program tex file we're writing
+      sec  - Dictionary with section data
     """
-    prog.write('\\textbf{\\LARGE %s - %s}' % (title,time))
+    prog.write('\\textbf{\\LARGE %s - %s}' % (sec['title'],sec['time']))
     prog.write('\\newline\n')
     prog.write('\\begin{center}\n')
-    for p in sec_people:
+    slides=[sec['slide']]
+    for p in sec['data']:
         _write_program_entry(prog,p)
+        slides.append(p['slide'])
     prog.write('\\end{center}\n\n')
-    return
+    return slides
 
 def _write_program_entry(prog,info):
     """
@@ -121,13 +127,15 @@ def _write_program_entry(prog,info):
     prog.write('\\end{tabular}\n')
     return
 
-def create_slides(files):
+def create_slide_pdf(files):
     """
-    Creates a compiled pdf of slides
+    Creates a compiled pdf of slides from a list.
+    Includes a test to make sure the slide exists.
     """
+    
     return
 
 if __name__=="__main__":
-    people = read_presenter_data('Data/')
-    create_program(people,sec_data)
+    people = read_presenter_data(data_dir)
+    slides = create_program(people,sec_data)
     pass
