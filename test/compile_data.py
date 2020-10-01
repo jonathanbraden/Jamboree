@@ -6,13 +6,15 @@ import os
 template_dir = 'templates/'
 slide_dir = '../Data/'
 data_dir = 'Data/'
+noSlide = 'templates/noslides_2020.pdf'
+headSlide = 'templates/collage_2019.pdf')
 
 sec_data = [
-    { 'title' : 'Introduction', 'slide' : 'templates/intro_header_2019.pdf', 'time' : '15:00-15:20' , 'people' : [], 'data' : [] },
-    { 'title' : 'Early Universe , Cosmology, and Galaxies', 'slide' : 'templates/cosmo_header_2019.pdf', 'time' : '15:20-15:35', 'people' : [u'Alex Lagu\xeb', 'Dongwoo Chung', 'Emily Tyhurst','James Willis','Jennifer Chan','Martine Lokken','Nathan Carlson','Pavel Motloch','Jonathan Braden','Xinyu Li'], 'data' : [] },
-    { 'title' : 'Scintillometry, FRBs, and Pulsars', 'slide' : 'templates/radio_header_2019.pdf', 'time' : '15:35-15:45', 'people' : ['Dylan Jow', 'Hsiu-Hsien Lin','Jonathan Zhang','Parasar Thulasiram','Ted Mackereth'], 'data' : [] },
-    { 'title' : 'Stars, Compact Objects, and Planets', 'slide' : 'templates/ga_header_2019.pdf', 'time' : '15:45-16:00', 'people' : ['Almog Yalinewich','Alysa Obertas','Eric Poisson','Janosz Dewberry','Norman Murray','Scott Tremaine','Wei Zhu','Chris Thompson','J. J. Zanazzi'], 'data' : [] },
-    { 'title' : 'Misclassified', 'slide' : 'templates/noslides.pdf', 'time' : 'unknown', 'people' : [], 'data' : [] }
+    { 'title' : 'Introduction', 'slide' : 'templates/intro_header_2020.pdf', 'time' : '15:00-15:20' , 'people' : [], 'data' : [] },
+    { 'title' : 'Early Universe , Cosmology, and Galaxies', 'slide' : 'templates/cosmo_header_2020.pdf', 'time' : '15:20-15:35', 'people' : [u'Alex Lagu\xeb', 'Dongwoo Chung', 'Emily Tyhurst','James Willis','Jennifer Chan','Martine Lokkken','Nathan Carlson','Pavel Motloch','Jonathan Braden','Xinyu Li'], 'data' : [] },
+    { 'title' : 'Scintillometry, FRBs, and Pulsars', 'slide' : 'templates/radio_header_2020.pdf', 'time' : '15:35-15:45', 'people' : ['Dylan Jow', 'Hsiu-Hsien Lin','Jonathan Zhang','Parasar Thulasiram','Ted Mackereth'], 'data' : [] },
+    { 'title' : 'Stars, Compact Objects, and Planets', 'slide' : 'templates/ga_header_2020.pdf', 'time' : '15:45-16:00', 'people' : ['Almog Yalinewich','Alysa Obertas','Eric Poisson','Janosz Dewberry','Norman Murray','Scott Tremaine','Wei Zhu','Chris Thompson','J. J. Zanazzi'], 'data' : [] },
+    { 'title' : 'Misclassified', 'slide' : noSlide, 'time' : 'unknown', 'people' : [], 'data' : [] }
     ]
 
 def read_presenter_data(dir):
@@ -101,6 +103,9 @@ def _make_section(prog,sec):
       prog - The program tex file we're writing
       sec  - Dictionary with section data
     """
+    if ((len(sec['data']) == 0) & (sec['title'] != 'Introduction')):
+        return []
+
     prog.write('\\textbf{\\LARGE %s - %s}' % (sec['title'],sec['time']))
     prog.write('\\newline\n')
     prog.write('\\begin{center}\n')
@@ -133,14 +138,14 @@ def create_slide_pdf(files,name="cita_jamboree_2020.pdf"):
     Creates a compiled pdf of slides from a list.
     Includes a test to make sure the slide exists.
     """
-    os.system('cp templates/noslides.pdf '+name)
+    os.system('cp '+headSlide+' '+name)
     for f_ in files:
         try:
             with open(f_):
                 fCur = f_.encode("utf8")
                 print(fCur)
         except IOError:
-            fCur = "templates/noslides.pdf"
+            fCur = noSlide
         command = "gs -q -dNOPAUSE -dBATCH -dCompressFonts=true -sDEVICE=pdfwrite -dPDFSETTING=/prepress -sOutputFile=temp.pdf "+name+" "+fCur
         os.system(command)
         os.system("mv temp.pdf "+name)
@@ -151,5 +156,5 @@ if __name__=="__main__":
     people = read_presenter_data(data_dir)
     slides = create_program(people,sec_data)
     if (len(sys.argv) > 1):
-        if sys.argv[1] == ("True" | "true" | "T" | "t"):
-            create_slide_pdf(slides)
+        if sys.argv[1] in ["True" , "true" , "T" , "t"]:
+            create_slide_pdf(slides,name="cita_jamboree_2020.pdf")
