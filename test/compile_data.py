@@ -8,11 +8,11 @@ slide_dir = '../Data/'
 data_dir = 'Data/'
 
 sec_data = [
-    { 'title' : 'Introduction',    'people' : [], 'time' : '15:00-15:20' },
-    { 'title' : 'Early Universe, Cosmology, and Galaxies', 'time' : '15:20-15:35', 'people' : [u'Alex Lagu\xeb', 'Dongwoo Chung', 'Emily Tyhurst','James Willis','Jennifer Chan','Martine Lokken','Nathan Carlson','Pavel Motloch','Jonathan Braden'] },
-    { 'title' : 'Scintillometry, FRBs, and Pulsars', 'time' : '15:35-15:45', 'people' : ['Dylan Jow', 'Hsiu-Hsien Lin','Jonathan Zhang','Parasar Thulasiram','Ted Mackereth'] },
-    { 'title' : 'Stars, Compact Objects, and Planets', 'time' : '15:45-16:00', 'people' : ['Almog Yalinewich','Alysa Obertas','Eric Poisson','Janosz Dewberry','Norman Murray','Scott Tremaine','Wei Zhu','Chris Thompson','J. J. Zanazzi'] },
-    { 'title' : 'Misclassified', 'time' : 'unknown' }
+    { 'title' : 'Introduction', 'time' : '15:00-15:20' , 'people' : [], 'data' : [] },
+    { 'title' : 'Early Universe, Cosmology, and Galaxies', 'time' : '15:20-15:35', 'people' : [u'Alex Lagu\xeb', 'Dongwoo Chung', 'Emily Tyhurst','James Willis','Jennifer Chan','Martine Lokken','Nathan Carlson','Pavel Motloch','Jonathan Braden','Xinyu Li'], 'data' : [] },
+    { 'title' : 'Scintillometry, FRBs, and Pulsars', 'time' : '15:35-15:45', 'people' : ['Dylan Jow', 'Hsiu-Hsien Lin','Jonathan Zhang','Parasar Thulasiram','Ted Mackereth'], 'data' : [] },
+    { 'title' : 'Stars, Compact Objects, and Planets', 'time' : '15:45-16:00', 'people' : ['Almog Yalinewich','Alysa Obertas','Eric Poisson','Janosz Dewberry','Norman Murray','Scott Tremaine','Wei Zhu','Chris Thompson','J. J. Zanazzi'], 'data' : [] },
+    { 'title' : 'Misclassified', 'time' : 'unknown', 'people' : [], 'data' : [] }
     ]
 
 def read_presenter_data(dir):
@@ -33,23 +33,21 @@ def read_presenter_data(dir):
     return people
 
 def group_people(people,sections):
-    sec_list = [ [] for i in range(len(sections)) ]
     for i in range(len(people)):
         p_ = people.pop()
-        if p_['name'] in sections[1]['people']:
-            sec_list[1].append(p_)
-        elif p_['name'] in sections[2]['people']:
-            sec_list[2].append(p_)
-        elif p_['name'] in sections[3]['people']:
-            sec_list[3].append(p_)
-        else:
-            sec_list[4].append(p_)
+        found = False
+        for s_ in sections[1:-1]:
+            if p_['name'] in s_['people']:
+                s_['data'].append(p_)
+                found = True
+        if not found:
+            sections[-1]['data'].append(p_)
 
-    if (len(sec_list[-1]) > 0):
+    if (len(sections[-1]['data']) > 0):
         print('Warning, missing presenters')
-        for p in sec_list[-1]:
+        for p in sections[-1]['data']:
             print(p['name'])
-    return sec_list
+    return
 
 def compute_times(start,talk_len):
     """
@@ -70,7 +68,7 @@ def convert_time_to_string(min):
     """
     return '{:d}:{:02d}'.format(min//60,min%60) 
 
-def create_program(people,sections=sec_data):
+def create_program(people,sections):
     """
     Write a LaTeX file with the program metadata.
     Stored in program.tex.
@@ -78,14 +76,14 @@ def create_program(people,sections=sec_data):
     Note: Any existing program.tex file is overwritten
     """
     # Start by grouping people into sections
-    sec_list = group_people(people,sections)
+    group_people(people,sections)
 
     # These first two lines are horrendous code style.  Fix them.
     os.system('cat {}program_header.tex > program.tex'.format(template_dir))
     prog = open('program.tex','a')
     slides = [] # This will store the ordered list of slides
-    for i,s_ in enumerate(sec_list):
-        _make_section(prog,s_,sections[i]['title'],sections[i]['time'])
+    for i,s_ in enumerate(sections):
+        _make_section(prog,s_['data'],s_['title'],s_['time'])
     prog.write('\\end{document}\n')
     prog.close()
 
@@ -131,5 +129,5 @@ def create_slides(files):
 
 if __name__=="__main__":
     people = read_presenter_data('Data/')
-    create_program(people)
+    create_program(people,sec_data)
     pass
