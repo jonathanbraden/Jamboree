@@ -1,0 +1,5 @@
+To run:
+ - Make sure you have all of the JSON data files and PDF slides (produced by the submission website) in the directory Data (or change it in the Python script)
+
+python compile_data.py    - Will produce a PDF of the program in program.pdf
+python_compile_data.py T  - Will produce a PDF of the program as well as a compilation of all slides (stored as cita_jamboree_2020.pdf)
