@@ -9,9 +9,11 @@ data_dir = '../Data/'
 noSlide = 'templates/noslides_2020.pdf'
 headSlide = 'templates/collage_2019.pdf'
 
+intro_data = { 'name' : 'Norm Murray', 'email' : 'murray@cita.utoronto.ca', 'title' : 'Introduction to CITA', 'abstract' : 'Introduction to CITA', 'slide' : 'templates/intro2_header_2020.pdf' }
+
 sec_data = [
-    { 'title' : 'Introduction', 'slide' : 'templates/intro_header_2020.pdf', 'time' : '15:00-15:20' , 'people' : [], 'data' : [] },
-    { 'title' : 'Early Universe , Cosmology, and Galaxies', 'slide' : 'templates/cosmo_header_2020.pdf', 'time' : '15:20-15:35', 'people' : [u'Alex Lagu\xeb', 'Dongwoo Chung', 'Emily Tyhurst','James Willis','Jennifer Chan','Martine Lokkken','Nathan Carlson','Pavel Motloch','Jonathan Braden','Xinyu Li'], 'data' : [] },
+    { 'title' : 'Introduction', 'slide' : 'templates/intro_header_2020.pdf', 'time' : '15:00-15:20' , 'people' : [], 'data' : [intro_data] },
+    { 'title' : 'Early Universe, Cosmology, and Galaxies', 'slide' : 'templates/cosmo_header_2020.pdf', 'time' : '15:20-15:35', 'people' : [u'Alex Lagu\xeb', 'Dongwoo Chung', 'Emily Tyhurst','James Willis','Jennifer Chan','Martine Lokkken','Nathan Carlson','Pavel Motloch','Jonathan Braden','Xinyu Li'], 'data' : [] },
     { 'title' : 'Scintillometry, FRBs, and Pulsars', 'slide' : 'templates/radio_header_2020.pdf', 'time' : '15:35-15:45', 'people' : ['Dylan Jow', 'Hsiu-Hsien Lin','Jonathan Zhang','Parasar Thulasiram','Ted Mackereth'], 'data' : [] },
     { 'title' : 'Stars, Compact Objects, and Planets', 'slide' : 'templates/ga_header_2020.pdf', 'time' : '15:45-16:00', 'people' : ['Almog Yalinewich','Alysa Obertas','Eric Poisson','Janosz Dewberry','Norman Murray','Scott Tremaine','Wei Zhu','Chris Thompson','J. J. Zanazzi'], 'data' : [] },
     { 'title' : 'Misclassified', 'slide' : noSlide, 'time' : 'unknown', 'people' : [], 'data' : [] }
@@ -51,7 +53,8 @@ def group_people(people,sections):
             print(p['name'])
 
     for s_ in sections:
-        s_['data'].sort()
+        print(sorted(s_['data'], key = lambda i : i['name']))
+        s_['data'] = sorted(s_['data'], key = lambda i : i['name'])
     return
 
 def compute_times(start,talk_len):
@@ -93,8 +96,8 @@ def create_program(people,sections):
     prog.write('\\end{document}\n')
     prog.close()
 
-    #os.system('pdflatex progam')
-    #os.system('rm -f program.log program.aux')
+    os.system('pdflatex program.tex')
+    os.system('rm -f program.log program.aux')
     return slides
 
 def _make_section(prog,sec):
