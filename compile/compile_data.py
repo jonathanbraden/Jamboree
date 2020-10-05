@@ -7,15 +7,15 @@ template_dir = 'templates/'
 slide_dir = '../Data/'
 data_dir = '../Data/'
 noSlide = 'templates/noslides_2020.pdf'
-headSlide = 'templates/collage_2019.pdf'
+headSlide = 'templates/collage_2020.pdf'
 
 intro_data = { 'name' : 'Norm Murray', 'email' : 'murray@cita.utoronto.ca', 'title' : 'Introduction to CITA', 'abstract' : 'Introduction to CITA', 'slide' : 'templates/intro2_header_2020.pdf' }
 
 sec_data = [
-    { 'title' : 'Introduction', 'slide' : 'templates/intro_header_2020.pdf', 'time' : '15:00-15:20' , 'people' : [], 'data' : [intro_data] },
-    { 'title' : 'Early Universe, Cosmology, and Galaxies', 'slide' : 'templates/cosmo_header_2020.pdf', 'time' : '15:20-15:35', 'people' : [u'Alex Lagu\xeb', 'Dongwoo Chung', 'Emily Tyhurst','James Willis','Jennifer Chan','Martine Lokkken','Nathan Carlson','Pavel Motloch','Jonathan Braden','Tom Morrison','Xinyu Li'], 'data' : [] },
-    { 'title' : 'Scintillometry, FRBs, and Pulsars', 'slide' : 'templates/radio_header_2020.pdf', 'time' : '15:35-15:45', 'people' : ['Dylan Jow', 'Hsiu-Hsien Lin','Jonathan Zhang','Parasar Thulasiram','Ted Mackereth'], 'data' : [] },
-    { 'title' : 'Stars, Compact Objects, and Planets', 'slide' : 'templates/ga_header_2020.pdf', 'time' : '15:45-16:00', 'people' : ['Almog Yalinewich','Alysa Obertas','Eric Poisson','Janosz Dewberry','Norman Murray','Scott Tremaine','Wei Zhu','Chris Thompson','John Zanazzi'], 'data' : [] },
+    { 'title' : 'Introduction', 'slide' : 'templates/intro_header_2020.pdf', 'time' : '15:00-15:15' , 'people' : [], 'data' : [intro_data] },
+    { 'title' : 'Early Universe, Cosmology, and Galaxies', 'slide' : 'templates/cosmo_header_2020.pdf', 'time' : '15:15-15:35', 'people' : [u'Alex Lagu\xeb', 'Dongwoo Chung', 'Emily Tyhurst','James Willis','Jennifer Chan','Martine Lokken','Nathan Carlson','Pavel Motloch','Jonathan Braden','Tom Morrison','Dick Bond','Jenna Freudenburg','Hongming Zhu','Ue-Li Pen'], 'data' : [] },
+    { 'title' : 'Scintillometry, FRBs, Pulsars, and ISM', 'slide' : 'templates/radio_header_2020.pdf', 'time' : '15:35-15:45', 'people' : ['Dylan Jow', 'Hsiu-Hsien Lin','Jonathan Zhang','Parasar Thulasiram','Ted Mackereth','Antoine Marchal','Peter Martin'], 'data' : [] },
+    { 'title' : 'Stars, Compact Objects, and Planets', 'slide' : 'templates/ga_header_2020.pdf', 'time' : '15:45-16:00', 'people' : ['Almog Yalinewich','Alysa Obertas','Eric Poisson','Janosz Dewberry','Norman Murray','Scott Tremaine','Wei Zhu','Chris Thompson','John Zanazzi','Xinyu Li'], 'data' : [] },
     { 'title' : 'Misclassified', 'slide' : noSlide, 'time' : 'unknown', 'people' : [], 'data' : [] }
     ]
 
@@ -147,6 +147,7 @@ def create_slide_pdf(files,name="cita_jamboree_2020.pdf"):
                 fCur = f_.encode("utf8")
                 print(fCur)
         except IOError:
+            print("Warning, no slide for "+f_.encode("utf8"))
             fCur = noSlide
         command = "gs -q -dNOPAUSE -dBATCH -dCompressFonts=true -sDEVICE=pdfwrite -dPDFSETTING=/prepress -sOutputFile=temp.pdf "+name+" "+fCur
         os.system(command)
