@@ -10,13 +10,18 @@
 ?>
 
 <h1>CITA Jamboree Slide Submission</h1>
-Contact either Jonathan (jbraden@cita.utoronto.ca) or Almog (ayalin@cita.utoronto.ca) if you have problems.<br><br>
+Contact either Jonathan (jbraden@cita.utoronto.ca) or Dongwoo (dongwooc@cita.utoronto.ca) if you have problems.<br><br>
 
 <form action="./submit.php" method="post" enctype="multipart/form-data">
   <label for="name">Name:</label><br>
   <input type="text" id="name" name="name" size="50"><br>
   <label for="email">Email (optional):</label><br>
   <input type="text" id="email" name="email" size="50"><br>
+  <label for="type">Do you want to give a longer talk?</label><br>
+  <input type="radio" id="yes" name="type" value="yes">
+  <label for="yes">Yes (I want to give a longer talk)</label><br>
+  <input type="radio" id="no" name="type" value="no" checked>
+  <label for="no">No (I want to give a lightning talk)</label><br>
   <label for="title">Title:</label><br>
   <input type="text" id="title" name="title" size="75"><br>
   <label for="abstract">Abstract:</label><br>

@@ -4,20 +4,135 @@ import json
 import os
 
 template_dir = 'templates/'
-slide_dir = '../Data/'
+slide_dir = '../Data_mv/'
 data_dir = '../Data/'
-noSlide = 'templates/noslides_2020.pdf'
-headSlide = 'templates/collage_2020.pdf'
+noSlide = 'templates/noslides_2021.pdf'
+headSlide = 'templates/collage_2021.pdf'
 
-intro_data = { 'name' : 'Norm Murray', 'email' : 'murray@cita.utoronto.ca', 'title' : 'Introduction to CITA', 'abstract' : 'Introduction to CITA', 'slide' : 'templates/intro2_header_2020.pdf' }
+intro_data = { 'name' : 'Juna Kollmeier', 'email' : 'jak@cita.utoronto.ca', 'title' : 'Introduction to CITA', 'abstract' : 'Introduction to CITA', 'slide' : 'templates/intro2_header_2021.pdf' }
 
-sec_data = [
-    { 'title' : 'Introduction', 'slide' : 'templates/intro_header_2020.pdf', 'time' : '15:00-15:15' , 'people' : [], 'data' : [intro_data] },
-    { 'title' : 'Early Universe, Cosmology, and Galaxies', 'slide' : 'templates/cosmo_header_2020.pdf', 'time' : '15:15-15:35', 'people' : [u'Alex Lagu\xeb', 'Dongwoo Chung', 'Emily Tyhurst','James Willis','Jennifer Chan','Martine Lokken','Nathan Carlson','Pavel Motloch','Jonathan Braden','Tom Morrison','Dick Bond','Jenna Freudenburg','Hongming Zhu','Ue-Li Pen'], 'data' : [] },
-    { 'title' : 'Scintillometry, FRBs, Pulsars, and ISM', 'slide' : 'templates/radio_header_2020.pdf', 'time' : '15:35-15:45', 'people' : ['Dylan Jow', 'Hsiu-Hsien Lin','Jonathan Zhang','Parasar Thulasiram','Ted Mackereth','Antoine Marchal','Peter Martin'], 'data' : [] },
-    { 'title' : 'Stars, Compact Objects, and Planets', 'slide' : 'templates/ga_header_2020.pdf', 'time' : '15:45-16:00', 'people' : ['Almog Yalinewich','Alysa Obertas','Eric Poisson','Janosz Dewberry','Norman Murray','Scott Tremaine','Wei Zhu','Chris Thompson','John Zanazzi','Xinyu Li'], 'data' : [] },
-    { 'title' : 'Misclassified', 'slide' : noSlide, 'time' : 'unknown', 'people' : [], 'data' : [] }
-    ]
+cosmo_1 = { 'title' : 'Cosmology and Extragalactic I', 
+            'slide' : 'templates/cosmo_header_2021.pdf', 
+            'time'  : 'Thursday : 12:15 - 13:00', 
+            'people' : ['Jose Tomas Galvez Ghersi',
+                        'Lukas Hergt',
+                        'Dick Bond',
+                        'Thomas Morrison',
+                        'Zack Li',
+                        'Nathan Carlson',
+                        'Matthew Johnson',
+                        'Pavel Motloch',
+                        'James Taylor',
+                        'Adrian Liu'],
+            'data' : []
+}
+
+cosmo_2 = { 'title' : 'Cosmology and Extragalactic II',
+            'slide' : 'templates/cosmo_header_2021.pdf',
+            'time'  : 'Friday : 15:20 - 16:20',
+            'people': ['Jennifer Y. H. Chan',
+                       'Dongwoo Chung',
+                       'Jonathan Braden',
+                       'Alex Lague',
+                       'Hongming Zhu',
+                       'Martine Lokken',
+                       'Jibran Haider',
+                       'Levon Pogosian'],
+            'data'  : []
+}
+
+gal_1 = { 'title'  : 'Galaxies I',
+          'slide'  : 'templates/galaxy_header_2021.pdf',
+          'time'   : 'Thursday : 15:20-16:20',
+          'people' : ['Marta Reina-Campos',
+                      'Seunghwan Lim',
+                      'Rainer Weinberger',
+                      'Denis Leahy',
+                      'Neige Frankel',
+                      'Lichen Liang'],
+          'data' : []
+}
+
+gal_2 = { 'title'  : 'Galaxies II',
+          'slide'  : 'templates/cosmo_header_2021.pdf',
+          'time'   : 'Friday : 14:20 - 15:20',
+          'people' : ['Aris Tritsis',
+                      'Antoine Marchal',
+                      'James McKee',
+                      'Ted Mackereth',
+                      'Peter Martin',
+                      'Jiayi Sun'],
+          'data' : []
+}
+
+planets = { 'title'  : 'Planets',
+            'slide'  : 'templates/cosmo_header_2020.pdf',
+            'time'   : 'Thursday : 13:00-14:00',
+            'people' : ['Eve Lee',
+                'Sam Hadden',
+                        'Scott Tremaine',
+                        'Fergus Horrobin',
+                        'J. J. Zanazzi',
+                        'Brett Gladman'],
+            'data'   : []
+}
+
+he_1  = { 'title'  : 'High Energy / FRB I',
+          'slide'  : 'templates/frb_header_2021.pdf',
+          'time'   : 'Thursday : 14:20 - 15:20',
+          'people' : ['Xinyu Li',
+                      'Jonathan Zhang',
+                      'Ashley Stock',
+                      'Fang Xi Lin',
+                      'Chris Thompson'],
+          'data'   : []
+}
+
+he_2 = { 'title'   : 'High Energy / FRB II',
+         'slide'   : 'templates/frb_header_2021.pdf',
+         'time'    : 'TBD',
+         'people'  : ['Dylan Jow',
+                      'Almog Yalinewich',
+                      'Daniel Baker', 
+                      'Simon Blouin',
+                      'Jing Santiago Luo',
+                      'Evan McDonough'],
+         'data'    : []
+}
+
+mm =  { 'title'    : 'Multimessenger and "Multitopic"',
+        'slide'    : 'templates/multi_header_2021.pdf',
+        'time'     : 'Friday : 12:00 - 1:00',
+        'people'   : ['Sarah Gossan',
+                      'Phil Landry',
+                      'Jose Miguel Jauregui',
+                      'Janosz Dewberry',
+                      'Omar Contigiani'],
+        'data'     : []
+}
+
+intro_data = { 'title'  : 'Introduction',
+               'slide'  : 'templates/intro_header_2020.pdf',
+               'time'   : 'Thursday : 12:00 - 12:15',
+               'people' : [],
+               'data'   : [intro_data]
+}
+
+sec_data = [intro_data,
+    cosmo_1, planets, he_1, gal_1, 
+    mm, he_2, gal_2, cosmo_2,
+    { 'title' : 'Unclassified', 'slide' : noSlide, 'time' : 'unknown', 'people' : [], 'data' : [] }
+]
+sec_data_thur = [intro_data,
+    cosmo_1, planets, he_1, gal_1, 
+    { 'title' : 'Unclassified', 'slide' : noSlide, 'time' : 'unknown', 'people' : [], 'data' : [] }
+]
+
+sec_data_fri = [
+    mm, he_2, gal_2, cosmo_2,
+    { 'title' : 'Unclassified', 'slide' : noSlide, 'time' : 'unknown', 'people' : [], 'data' : [] }
+]
+
 
 def read_presenter_data(dir):
     """
@@ -37,11 +152,16 @@ def read_presenter_data(dir):
     return people
 
 def group_people(people,sections):
+    """
+    Given a collection of people and sections specifying a set of people,
+    place the people in the correct sections.
+    """
     for i in range(len(people)):
         p_ = people.pop()
         found = False
         for s_ in sections[1:-1]:
             if p_['name'] in s_['people']:
+                p_['order'] = s_['people'].index(p_['name'])
                 s_['data'].append(p_)
                 found = True
         if not found:
@@ -52,9 +172,24 @@ def group_people(people,sections):
         for p in sections[-1]['data']:
             print(p['name'])
 
-    for s_ in sections:
-        s_['data'] = sorted(s_['data'], key = lambda i : i['name'])
+    for s_ in sections[1:-1]:
+        if len(s_['people']) != len(s_['data']):
+            _add_missing_submissions(s_)
+        s_['data'] = sorted(s_['data'], key = lambda i : i['order'])
     return
+
+def _add_missing_submissions(sec):
+    found_names = [ d_['name'] for d_ in sec['data'] ]
+    for i_,name in enumerate(sec['people']):
+        if name not in found_names:
+            p_ = _make_null_submission(name)
+            p_['order'] = i_
+            sec['data'].append(p_)
+    return
+
+def _make_null_submission(name):
+    p_ = { 'name' : name, 'type' : 'no', 'abstract' : 'TBA', 'title' : 'TBA', 'email' : '', 'slide' : noSlide }
+    return p_
 
 def compute_times(start,talk_len):
     """
@@ -85,7 +220,6 @@ def create_program(people,sections):
     slides = [] # Add the CITA jamboree slide here
     group_people(people,sections)
 
-    # These first two lines are horrendous code style.  Fix them.
     os.system('cat {}program_header.tex > program.tex'.format(template_dir))
     prog = open('program.tex','a')
     slides = [] # This will store the ordered list of slides
@@ -135,7 +269,7 @@ def _write_program_entry(prog,info):
     prog.write('\\end{tabular}\n')
     return
 
-def create_slide_pdf(files,name="cita_jamboree_2020.pdf"):
+def create_slide_pdf(files,name="cita_jamboree_2021.pdf"):
     """
     Creates a compiled pdf of slides from a list.
     Includes a test to make sure the slide exists.
@@ -160,4 +294,4 @@ if __name__=="__main__":
     slides = create_program(people,sec_data)
     if (len(sys.argv) > 1):
         if sys.argv[1] in ["True" , "true" , "T" , "t"]:
-            create_slide_pdf(slides,name="cita_jamboree_2020.pdf")
+            create_slide_pdf(slides,name="cita_jamboree_2021.pdf")

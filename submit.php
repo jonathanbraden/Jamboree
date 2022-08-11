@@ -1,12 +1,20 @@
 <?php
 include 'functions.php';
-$basedir = "/cita/d/www/home/~jbraden/jamboree/";
+$basedir = "/cita/d/www/home/jbraden/Jamboree/";
 $datadir = "Data/";
+
+//if ( !file_exists($datadir) ) {
+//   echo "Making directory";
+//   $worked = mkdir("Data",0744);
+//   echo $worked;
+//   file_put_contents($datadir.'test.txt','Hello, World');
+//}
 
 $name = trim($_POST["name"]); 
 $title = $_POST["title"];
 $abstract = $_POST["abstract"];
 $email = $_POST["email"];
+$type = $_POST["type"];
 $slide = $_FILES["slide"]["tmp_name"];
 $slide_type = $_FILES["slide"]["type"];
 $slide_name = chop($_FILES["slide"]["name"]);
@@ -30,6 +38,7 @@ file_put_contents($base."-title.txt",$title);
 
 $jsFile = $base.".json";
 $obj->name=$name;
+$obj->type=$type;
 $obj->title=$title;
 $obj->abstract=$abstract;
 $obj->email=$email;
@@ -48,30 +57,42 @@ if ( is_uploaded_file($slide) ) {
    echo "<h2>Submission Successful!</h2>";
 } 
 else {
-       echo "<h2>Error uploading file.  Please resubmit.</h2>";
+       echo "<h2>Error uploading slide.</h2>";
+       echo "<b>Reason for error: </b>";
        switch ($_FILES['slide']['error']) { 
          case 1:
-       	   echo "Slide size exceeds PHP server limit of 10MB";
+       	   echo "Slide size exceeds PHP server limit of 10MB.  ";
+	   echo "Please reduce slide size and resubmit";
 	   break;
 	 case 2:
-	   echo "Slide size exceeds 10MB";
+	   echo "Slide size exceeds 10MB.  ";
+	   echo "Please reduce slide size and resubmit";
 	   break;
 	 case 3:    	  
 	   echo "Upload was interupted";
 	   break;
 	 case 4:
-	   echo "No slide was uploaded";   
+	   echo "No slide was included.";
 	   break;
       }
+      echo "<br><br>Please upload your slide(s) by October 4th.<br>";
+      echo "<br>The following information has been recorded."; 
+      echo "<h3>Summary</h3>";
+      echo "<b>Name</b>: $name<br>";	  
+      echo "<b>Email</b>: $email<br>";
+      echo "<b>Long Talk</b>: $type<br><br>";
+      echo "<b>Title</b>: $title<br>";
+      echo "<b>Abstract</b>:<br>";
+      echo "$abstract<br>";
       return;
 }
 
 // Figure out why displayInfo doesn't work to replace this
 echo "<h3>Summary</h3>";
-echo "Name: $name<br>";
-echo "Email: $email<br><br>";
-echo "Title: $title<br>";
-echo "Abstract:<br>";
+echo "<b>Name</b>: $name<br>";
+echo "<b>Email</b>: $email<br><br>";
+echo "<b>Title</b>: $title<br>";
+echo "<b>Abstract</b>:<br>";
 echo "$abstract<br>";
 echo "<a href='$newslide'>Preview Slide</a>";
 ?>

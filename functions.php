@@ -17,11 +17,12 @@
   function displayInfo($jsFile){ // Display user information in JSON object
     $data = json_decode(file_get_contents($jsFile));
     echo "<h3>Summary</h3>";
-    echo "Name: $data->name<br>";
-    echo "Email: $data->email<br><br>";
-    echo "Title: $data->title<br>";
-    echo "Abstract<br>";
-    echo "$data->abstract<br>";
+    echo "<b>Name</b>: $data->name<br>";
+    echo "<b>Email</b>: $data->email<br>";
+    echo "<b>Long Talk</b>: $data->type<br><br>";
+    echo "<b>Title</b>: $data->title<br>";
+    echo "<b>Abstract</b>:<br>";
+    echo "$data->abstract<br><br>";
     echo "<a href='$data->slide'>Preview Slide</a>";
   }	
 ?>

@@ -15,4 +15,12 @@ if (!is_readable($jsFile)){
    return;
 }
 displayInfo($jsFile);
+// In here include a button to submit a new slide
+//<form action="./addSlide.php" method="post" enctype="multipart/form-data">
+//<label for="slide">Slide (PDF format, Max Size: 10MB):</label>
+//<input type="file" name="slide" id="slide">
+//<input type="submit" value="Submit">
+//</form>
+
+//<form action=".updateInfo.php" method="post" enctype"multipart/form-data">
 ?>
